@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {GitHubService} from '../../services/git-hub.service';
+import {OAuthService} from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-main',
@@ -8,15 +9,24 @@ import {GitHubService} from '../../services/git-hub.service';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private service: GitHubService) {
+  constructor(private oauthService: OAuthService) {
   }
 
   ngOnInit() {
   }
 
-  test() {
-    this.service.login();
+  public login() {
+    this.oauthService.initImplicitFlow();
+  }
 
+  public logoff() {
+    this.oauthService.logOut();
+  }
+
+  public get name() {
+    let claims: any = this.oauthService.getIdentityClaims();
+    if (!claims) return null;
+    return claims.given_name;
   }
 
 

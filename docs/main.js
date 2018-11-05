@@ -56,23 +56,38 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angular-oauth2-oidc */ "./node_modules/angular-oauth2-oidc/esm5/angular-oauth2-oidc.js");
+/* harmony import */ var _services_git_hub_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/git-hub.service */ "./src/app/services/git-hub.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(oauthService) {
+        this.oauthService = oauthService;
         this.title = 'GitHubOnline';
+        this.configureWithNewConfigApi();
     }
+    AppComponent.prototype.configureWithNewConfigApi = function () {
+        this.oauthService.configure(_services_git_hub_service__WEBPACK_IMPORTED_MODULE_2__["authConfig"]);
+        this.oauthService.tokenValidationHandler = new angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__["JwksValidationHandler"]();
+        this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
-        })
+        }),
+        __metadata("design:paramtypes", [angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__["OAuthService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -99,12 +114,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
 /* harmony import */ var _services_git_hub_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/git-hub.service */ "./src/app/services/git-hub.service.ts");
+/* harmony import */ var angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! angular-oauth2-oidc */ "./node_modules/angular-oauth2-oidc/esm5/angular-oauth2-oidc.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -133,8 +152,10 @@ var AppModule = /** @class */ (function () {
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["BrowserAnimationsModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_9__["HttpClientModule"],
+                angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_8__["OAuthModule"].forRoot(),
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"].forRoot(appRoutes, {
-                    enableTracing: true,
+                    enableTracing: false,
                     useHash: true,
                 }),
                 _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatToolbarModule"],
@@ -159,7 +180,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<button (click)=\"test()\">test</button>\r\n"
+module.exports = "<h1 *ngIf=\"!name\">\r\n  Hallo\r\n</h1>\r\n<h1 *ngIf=\"name\">\r\n  Hallo, {{name}}\r\n</h1>\r\n\r\n<button class=\"btn btn-default\" (click)=\"login()\">\r\n  Login\r\n</button>\r\n<button class=\"btn btn-default\" (click)=\"logoff()\">\r\n  Logout\r\n</button>\r\n\r\n<div>\r\n  Username/Passwort zum Testen: max/geheim\r\n</div>\r\n"
 
 /***/ }),
 
@@ -185,7 +206,7 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainComponent", function() { return MainComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_git_hub_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/git-hub.service */ "./src/app/services/git-hub.service.ts");
+/* harmony import */ var angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angular-oauth2-oidc */ "./node_modules/angular-oauth2-oidc/esm5/angular-oauth2-oidc.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -198,21 +219,34 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var MainComponent = /** @class */ (function () {
-    function MainComponent(service) {
-        this.service = service;
+    function MainComponent(oauthService) {
+        this.oauthService = oauthService;
     }
     MainComponent.prototype.ngOnInit = function () {
     };
-    MainComponent.prototype.test = function () {
-        this.service.login();
+    MainComponent.prototype.login = function () {
+        this.oauthService.initImplicitFlow();
     };
+    MainComponent.prototype.logoff = function () {
+        this.oauthService.logOut();
+    };
+    Object.defineProperty(MainComponent.prototype, "name", {
+        get: function () {
+            var claims = this.oauthService.getIdentityClaims();
+            if (!claims)
+                return null;
+            return claims.given_name;
+        },
+        enumerable: true,
+        configurable: true
+    });
     MainComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-main',
             template: __webpack_require__(/*! ./main.component.html */ "./src/app/components/main/main.component.html"),
             styles: [__webpack_require__(/*! ./main.component.scss */ "./src/app/components/main/main.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_git_hub_service__WEBPACK_IMPORTED_MODULE_1__["GitHubService"]])
+        __metadata("design:paramtypes", [angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__["OAuthService"]])
     ], MainComponent);
     return MainComponent;
 }());
@@ -225,11 +259,12 @@ var MainComponent = /** @class */ (function () {
 /*!*********************************************!*\
   !*** ./src/app/services/git-hub.service.ts ***!
   \*********************************************/
-/*! exports provided: GitHubService */
+/*! exports provided: authConfig, GitHubService */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "authConfig", function() { return authConfig; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GitHubService", function() { return GitHubService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
@@ -242,6 +277,17 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+var authConfig = {
+    // Url of the Identity Provider
+    issuer: 'https://github.com/login/oauth/authorize',
+    // URL of the SPA to redirect the user to after login
+    redirectUri: window.location.origin,
+    // The SPA's id. The SPA is registerd with this id at the auth-server
+    clientId: 'a9139d0c87c6868e0554',
+    // set the scope for the permissions the client should request
+    // The first three are defined by OIDC. The 4th is a usecase-specific one
+    scope: null,
+};
 var GitHubService = /** @class */ (function () {
     function GitHubService() {
         this.client_id = 'a9139d0c87c6868e0554';

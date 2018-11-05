@@ -7,6 +7,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {MatToolbarModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GitHubService} from './services/git-hub.service';
+import {OAuthModule} from 'angular-oauth2-oidc';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 
 const appRoutes: Routes = [
@@ -29,10 +31,12 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    OAuthModule.forRoot(),
     RouterModule.forRoot(
       appRoutes,
       {
-        enableTracing: true,
+        enableTracing: false,
         useHash: true,
       },
     ),
