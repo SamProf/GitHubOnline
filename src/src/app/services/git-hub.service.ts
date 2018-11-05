@@ -36,18 +36,25 @@ export class GitHubService {
 
 
   init() {
+
+
     this.code = this.getQueryVariable('code');
     this.state = this.getQueryVariable('state') || getRandomInt(0, 99999).toString();
 
     if (this.code) {
-      this.http.post('https://github.com/login/oauth/access_token', {
-        client_id: this.client_id,
-        client_secret: 'bc4cb39ccfc9462b14727235bb019ea776c7526e',
-        code: this.code,
-        state: this.state,
-      }, {
-        withCredentials: true,
-      },).toPromise()
+      this.http.post('https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token',
+
+        'client_id=' + encodeURIComponent(this.client_id)
+        + '&client_secret=' + encodeURIComponent('bc4cb39ccfc9462b14727235bb019ea776c7526e')
+        + '&code=' + encodeURIComponent(this.code)
+        + '&state=' + encodeURIComponent(this.state)
+        , {
+          withCredentials: true,
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+          }
+        },).toPromise()
         .then((d) => {
           console.log('ok');
           console.log(d);
