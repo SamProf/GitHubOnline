@@ -6,6 +6,7 @@ import {MainComponent} from './components/main/main.component';
 import {RouterModule, Routes} from '@angular/router';
 import {MatToolbarModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {GitHubService} from './services/git-hub.service';
 
 
 const appRoutes: Routes = [
@@ -37,7 +38,9 @@ const appRoutes: Routes = [
     ),
     MatToolbarModule,
   ],
-  providers: [],
+  providers: [
+    GitHubService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
