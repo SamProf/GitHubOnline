@@ -4,6 +4,8 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {MainComponent} from './components/main/main.component';
 import {RouterModule, Routes} from '@angular/router';
+import {MatToolbarModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 const appRoutes: Routes = [
@@ -25,14 +27,15 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(
       appRoutes,
       {
         enableTracing: true,
         useHash: true,
-      } // <-- debugging purposes only
-    )
-    // other imports here
+      },
+    ),
+    MatToolbarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
