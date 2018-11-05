@@ -185,6 +185,7 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainComponent", function() { return MainComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_git_hub_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/git-hub.service */ "./src/app/services/git-hub.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -195,12 +196,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var MainComponent = /** @class */ (function () {
-    function MainComponent() {
+    function MainComponent(service) {
+        this.service = service;
     }
     MainComponent.prototype.ngOnInit = function () {
     };
     MainComponent.prototype.test = function () {
+        this.service.login();
     };
     MainComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -208,7 +212,7 @@ var MainComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./main.component.html */ "./src/app/components/main/main.component.html"),
             styles: [__webpack_require__(/*! ./main.component.scss */ "./src/app/components/main/main.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_git_hub_service__WEBPACK_IMPORTED_MODULE_1__["GitHubService"]])
     ], MainComponent);
     return MainComponent;
 }());
@@ -240,7 +244,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var GitHubService = /** @class */ (function () {
     function GitHubService() {
+        this.client_id = 'a9139d0c87c6868e0554';
     }
+    GitHubService.prototype.login = function () {
+        window.location.href = 'https://github.com/login/oauth/authorize?client_id=' + encodeURI(this.client_id);
+    };
     GitHubService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
