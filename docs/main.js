@@ -56,8 +56,7 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angular-oauth2-oidc */ "./node_modules/angular-oauth2-oidc/esm5/angular-oauth2-oidc.js");
-/* harmony import */ var _services_git_hub_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/git-hub.service */ "./src/app/services/git-hub.service.ts");
+/* harmony import */ var _services_git_hub_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/git-hub.service */ "./src/app/services/git-hub.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -69,25 +68,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-
 var AppComponent = /** @class */ (function () {
-    function AppComponent(oauthService) {
-        this.oauthService = oauthService;
+    function AppComponent(service) {
+        this.service = service;
         this.title = 'GitHubOnline';
-        this.configureWithNewConfigApi();
+        this.service.init();
     }
-    AppComponent.prototype.configureWithNewConfigApi = function () {
-        this.oauthService.configure(_services_git_hub_service__WEBPACK_IMPORTED_MODULE_2__["authConfig"]);
-        this.oauthService.tokenValidationHandler = new angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__["JwksValidationHandler"]();
-        this.oauthService.loadDiscoveryDocumentAndTryLogin();
-    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__["OAuthService"]])
+        __metadata("design:paramtypes", [_services_git_hub_service__WEBPACK_IMPORTED_MODULE_1__["GitHubService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -180,7 +173,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 *ngIf=\"!name\">\r\n  Hallo\r\n</h1>\r\n<h1 *ngIf=\"name\">\r\n  Hallo, {{name}}\r\n</h1>\r\n\r\n<button class=\"btn btn-default\" (click)=\"login()\">\r\n  Login\r\n</button>\r\n<button class=\"btn btn-default\" (click)=\"logoff()\">\r\n  Logout\r\n</button>\r\n\r\n<div>\r\n  Username/Passwort zum Testen: max/geheim\r\n</div>\r\n"
+module.exports = "<button (click)=\"service.login()\">Login</button>\r\n"
 
 /***/ }),
 
@@ -206,7 +199,7 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainComponent", function() { return MainComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! angular-oauth2-oidc */ "./node_modules/angular-oauth2-oidc/esm5/angular-oauth2-oidc.js");
+/* harmony import */ var _services_git_hub_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/git-hub.service */ "./src/app/services/git-hub.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -219,38 +212,39 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var MainComponent = /** @class */ (function () {
-    function MainComponent(oauthService) {
-        this.oauthService = oauthService;
+    function MainComponent(service) {
+        this.service = service;
     }
     MainComponent.prototype.ngOnInit = function () {
     };
-    MainComponent.prototype.login = function () {
-        this.oauthService.initImplicitFlow();
-    };
-    MainComponent.prototype.logoff = function () {
-        this.oauthService.logOut();
-    };
-    Object.defineProperty(MainComponent.prototype, "name", {
-        get: function () {
-            var claims = this.oauthService.getIdentityClaims();
-            if (!claims)
-                return null;
-            return claims.given_name;
-        },
-        enumerable: true,
-        configurable: true
-    });
     MainComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-main',
             template: __webpack_require__(/*! ./main.component.html */ "./src/app/components/main/main.component.html"),
             styles: [__webpack_require__(/*! ./main.component.scss */ "./src/app/components/main/main.component.scss")]
         }),
-        __metadata("design:paramtypes", [angular_oauth2_oidc__WEBPACK_IMPORTED_MODULE_1__["OAuthService"]])
+        __metadata("design:paramtypes", [_services_git_hub_service__WEBPACK_IMPORTED_MODULE_1__["GitHubService"]])
     ], MainComponent);
     return MainComponent;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/helpers/math.ts":
+/*!*********************************!*\
+  !*** ./src/app/helpers/math.ts ***!
+  \*********************************/
+/*! exports provided: getRandomInt */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandomInt", function() { return getRandomInt; });
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 
 /***/ }),
@@ -267,6 +261,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "authConfig", function() { return authConfig; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GitHubService", function() { return GitHubService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _helpers_math__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/math */ "./src/app/helpers/math.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -276,6 +272,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
 
 var authConfig = {
     // Url of the Identity Provider
@@ -289,17 +287,53 @@ var authConfig = {
     scope: null,
 };
 var GitHubService = /** @class */ (function () {
-    function GitHubService() {
+    function GitHubService(http) {
+        this.http = http;
         this.client_id = 'a9139d0c87c6868e0554';
     }
+    GitHubService.prototype.init = function () {
+        this.code = this.getQueryVariable('code');
+        this.state = this.getQueryVariable('state') || Object(_helpers_math__WEBPACK_IMPORTED_MODULE_1__["getRandomInt"])(0, 99999).toString();
+        if (this.code) {
+            this.http.post('https://github.com/login/oauth/access_token', {
+                client_id: this.client_id,
+                client_secret: 'bc4cb39ccfc9462b14727235bb019ea776c7526e',
+                code: this.code,
+                state: this.state,
+            }, {
+                withCredentials: true,
+            }).toPromise()
+                .then(function (d) {
+                console.log('ok');
+                console.log(d);
+                debugger;
+            })
+                .catch(function (e) {
+                console.log('error');
+                console.log(e);
+                debugger;
+            });
+        }
+    };
+    GitHubService.prototype.getQueryVariable = function (variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (decodeURIComponent(pair[0]) == variable) {
+                return decodeURIComponent(pair[1]);
+            }
+        }
+        // console.log('Query variable %s not found', variable);
+    };
     GitHubService.prototype.login = function () {
-        window.location.href = 'https://github.com/login/oauth/authorize?client_id=' + encodeURI(this.client_id);
+        window.location.href = 'https://github.com/login/oauth/authorize?client_id=' + encodeURI(this.client_id) + '&state=' + encodeURI(this.state);
     };
     GitHubService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
     ], GitHubService);
     return GitHubService;
 }());

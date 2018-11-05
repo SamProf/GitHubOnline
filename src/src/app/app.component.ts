@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {JwksValidationHandler, OAuthService} from 'angular-oauth2-oidc';
-import {authConfig} from './services/git-hub.service';
+import {authConfig, GitHubService} from './services/git-hub.service';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +11,10 @@ export class AppComponent {
   title = 'GitHubOnline';
 
 
-  constructor(private oauthService: OAuthService) {
-    this.configureWithNewConfigApi();
+  constructor(private service: GitHubService) {
+    this.service.init();
   }
 
 
-  private configureWithNewConfigApi() {
-    this.oauthService.configure(authConfig);
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
-  }
+
 }
