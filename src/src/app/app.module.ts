@@ -4,11 +4,14 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {MainComponent} from './components/main/main.component';
 import {RouterModule, Routes} from '@angular/router';
-import {MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {GitHubService} from './services/git-hub.service';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {LogService} from './services/log.service';
+import {NgxLoadingModule} from 'ngx-loading';
+import {AppService} from './services/app.service';
 
 
 const appRoutes: Routes = [
@@ -41,9 +44,15 @@ const appRoutes: Routes = [
       },
     ),
     MatToolbarModule,
+    NgxLoadingModule.forRoot({}),
+    MatButtonModule,
+    MatIconModule,
+
   ],
   providers: [
-    GitHubService
+    GitHubService,
+    LogService,
+    AppService,
   ],
   bootstrap: [AppComponent]
 })
