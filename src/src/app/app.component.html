@@ -2,15 +2,17 @@
   <mat-toolbar-row>
     <span>GitHub Online</span>
     <span class="example-spacer"></span>
-    <button mat-button color="accent" *ngIf="!service.token" (click)="service.login()">
+    <button mat-button color="accent" *ngIf="!app.token" (click)="service.login()">
       Login
     </button>
+
+    <span *ngIf="app.user">{{app.user.login}}</span>
   </mat-toolbar-row>
 </mat-toolbar>
 
 
 <ngx-loading [show]="app.loading"></ngx-loading>
 
-<div *ngIf="service.token">
-  <router-outlet></router-outlet>
-</div>
+
+<router-outlet></router-outlet>
+

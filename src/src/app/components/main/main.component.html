@@ -1,1 +1,7 @@
-workd!
+<mat-form-field *ngIf="repos">
+  <mat-select placeholder="Repo">
+    <mat-option *ngFor="let repo of repos" [value]="repo.full_name">
+      {{repo.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

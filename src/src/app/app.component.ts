@@ -21,9 +21,6 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.app.run(async () => {
-      await this.service.getAccessTokenAsync();
-    });
   }
 
 

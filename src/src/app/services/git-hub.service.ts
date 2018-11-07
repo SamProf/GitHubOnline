@@ -4,6 +4,8 @@ import {getRandomInt} from '../helpers/math';
 import {HttpClient} from '@angular/common/http';
 import {AccessToken} from './contract/access-token';
 import {LogService} from './log.service';
+import {User} from './contract/user';
+import {Repo} from './contract/repo';
 
 
 export const authConfig: AuthConfig = {
@@ -32,17 +34,18 @@ export class GitHubService {
   client_id: string = 'a9139d0c87c6868e0554';
   state: string;
   code: string;
-  token: AccessToken;
+
+  // token: AccessToken;
 
   constructor(private http: HttpClient, private log: LogService) {
   }
 
 
-  getAccessTokenAsync(): Promise<AccessToken> {
+  access_token(): Promise<AccessToken> {
 
-    this.token = JSON.parse(localStorage.getItem('gitHub_token'));
-    if (this.token) {
-      return Promise.resolve(this.token);
+    var token = JSON.parse(localStorage.getItem('gitHub_token'));
+    if (token) {
+      return Promise.resolve(token);
     }
 
     if (this.code) {
@@ -61,7 +64,7 @@ export class GitHubService {
         .toPromise()
         .then((d) => {
           this.log.debug('Login success');
-          this.token = d;
+          // this.token = d;
           localStorage.setItem('gitHub_token', JSON.stringify(d));
           return d;
         })
@@ -73,6 +76,32 @@ export class GitHubService {
     else {
       return Promise.reject(new Error('Code is empty'));
     }
+  }
+
+  user(token: AccessToken): Promise<User> {
+    return this.http.get<User>('https://api.github.com/user',
+      {
+        // withCredentials: true,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'token ' + token.access_token
+
+        }
+      }).toPromise();
+  }
+
+  user_repos(token: AccessToken): Promise<Repo[]> {
+    return this.http.get<Repo[]>('https://api.github.com/user/repos',
+      {
+        // withCredentials: true,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'token ' + token.access_token
+
+        }
+      }).toPromise();
   }
 
 
