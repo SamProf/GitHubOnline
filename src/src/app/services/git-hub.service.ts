@@ -72,8 +72,7 @@ export class GitHubService {
           this.log.error(e, 'Login error');
           throw  e;
         });
-    }
-    else {
+    } else {
       return Promise.reject(new Error('Code is empty'));
     }
   }
@@ -93,6 +92,19 @@ export class GitHubService {
 
   user_repos(token: AccessToken): Promise<Repo[]> {
     return this.http.get<Repo[]>('https://api.github.com/user/repos',
+      {
+        // withCredentials: true,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'token ' + token.access_token
+
+        }
+      }).toPromise();
+  }
+
+  repo(token: AccessToken, user: string, repo: string): Promise<Repo> {
+    return this.http.get<Repo>('https://api.github.com/repos/' + user + '/' + repo,
       {
         // withCredentials: true,
         headers: {

@@ -14,6 +14,7 @@ import {NgxLoadingModule} from 'ngx-loading';
 import {AppService} from './services/app.service';
 import {AuthGuardService} from './services/auth-guard.service';
 import { InfoComponent } from './components/info/info.component';
+import {FormsModule} from '@angular/forms';
 
 
 const appRoutes: Routes = [
@@ -61,6 +62,7 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatIconModule,
     MatSelectModule,
+    FormsModule,
 
   ],
   providers: [

@@ -1,7 +1,14 @@
-<mat-form-field *ngIf="repos">
-  <mat-select placeholder="Repo">
-    <mat-option *ngFor="let repo of repos" [value]="repo.full_name">
-      {{repo.name}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<!--<mat-form-field *ngIf="app.repos">-->
+  <!--<mat-select placeholder="Repo">-->
+    <!--<mat-option *ngFor="let repo of app.repos" [value]="repo.full_name">-->
+      <!--{{repo.name}}-->
+    <!--</mat-option>-->
+  <!--</mat-select>-->
+<!--</mat-form-field>-->
+
+
+
+<div style="height: 20px; display: flex; flex-direction: row;">
+  <button (click)="parseStars()">Parse stars</button>
+</div>
+<textarea [(ngModel)]='text' style="flex: 1;"></textarea>
